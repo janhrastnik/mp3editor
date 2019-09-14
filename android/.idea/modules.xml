@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mp3agic-0.9.1/mp3agic-0.9.1.iml" filepath="$PROJECT_DIR$/mp3agic-0.9.1/mp3agic-0.9.1.iml" />
       <module fileurl="file://$PROJECT_DIR$/mp3editor.iml" filepath="$PROJECT_DIR$/mp3editor.iml" />
     </modules>
   </component>

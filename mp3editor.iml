@@ -12,9 +12,10 @@
       <excludeFolder url="file://$MODULE_DIR$/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/example/build" />
     </content>
+    <orderEntry type="jdk" jdkName="Android API 27 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />
     <orderEntry type="library" name="Flutter Plugins" level="project" />
-    <orderEntry type="library" name="com.mpatric:mp3agic:0.9.1" level="application" />
+    <orderEntry type="library" name="com.mpatric:mp3agic:0.9.0" level="application" />
   </component>
 </module>

@@ -1,2 +1,1 @@
 rootProject.name = 'mp3editor'
-include ':mp3agic-0.9.1'

@@ -22,13 +22,13 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        targetSdkVersion 28
-        maxSdkVersion 28
+        targetSdkVersion 27
+        maxSdkVersion 27
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -41,5 +41,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'mp3agic-0.9.1', include: ['*.aar', '*.jar'], exclude: [])
+    implementation files('mp3agic-0.9.0/mp3agic-0.9.0.jar')
 }
+

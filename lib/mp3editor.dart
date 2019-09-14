@@ -10,5 +10,13 @@ class Mp3editor {
     final String title = await _channel.invokeMethod('getTitle', <String, dynamic>{
       'filepath': filepath
     });
+    return title;
+  }
+
+  static Future<void> setTitle(filepath, title) async {
+    await _channel.invokeMethod('setTitle', <String, dynamic>{
+      'filepath': filepath,
+      'title': title
+    });
   }
 }
