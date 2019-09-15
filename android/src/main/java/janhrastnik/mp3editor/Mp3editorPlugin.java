@@ -11,7 +11,9 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import com.mpatric.mp3agic.ID3v1;
+import com.mpatric.mp3agic.ID3v1Tag;
 import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.ID3v24Tag;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.NotSupportedException;
 import com.mpatric.mp3agic.UnsupportedTagException;
@@ -59,15 +61,22 @@ public class Mp3editorPlugin implements MethodCallHandler {
             String title = (String) arguments.get("title");
             if (tag1 != null) {
                 tag1.setTitle(title);
+                tag1 = new ID3v1Tag();
+                mp3file.setId3v1Tag(tag1);
             } else {
                 tag2.setTitle(title);
+                tag2 = new ID3v24Tag();
+                mp3file.setId3v2Tag(tag2);
             }
             try {
                 File file = new File(filepath);
                 if (file.delete()) {
-                    mp3file.save("temp.mp3");
-                    File oldFile = new File("temp.mp3");
-                    if (oldFile.renameTo(new File(filepath))) {
+                    System.out.println("test123");
+                    String newfilepath = filepath.substring(0, filepath.length() - 4) +  " - copy.mp3";
+                    mp3file.save(newfilepath);
+                    File oldFile = new File(newfilepath);
+                    File newFileLocation = new File(filepath);
+                    if (oldFile.renameTo(newFileLocation)) {
                         System.out.println("File renamed successfully");
                     }
                 }
