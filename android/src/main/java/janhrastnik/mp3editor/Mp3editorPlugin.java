@@ -44,8 +44,10 @@ public class Mp3editorPlugin implements MethodCallHandler {
       Mp3File mp3file = new Mp3File(filepath);
 
       if (mp3file.hasId3v1Tag()) {
+          System.out.println("Mp3file has v1 tag.");
         tag1 = mp3file.getId3v1Tag();
       } else {
+          System.out.println("Mp3file has v2 tag.");
         tag2 = mp3file.getId3v2Tag();
       }
 
@@ -54,29 +56,35 @@ public class Mp3editorPlugin implements MethodCallHandler {
         if (tag1 != null) {
           title = tag1.getTitle();
         } else {
+            System.out.println("v2 tag gets called.");
           title = tag2.getTitle();
         }
         result.success(title);
       } if (call.method.equals("setTitle")) {
             String title = (String) arguments.get("title");
             if (tag1 != null) {
+                System.out.println("v1 tag gets called.");
                 tag1.setTitle(title);
-                tag1 = new ID3v1Tag();
                 mp3file.setId3v1Tag(tag1);
             } else {
-                tag2.setTitle(title);
+                System.out.println("v2 tag gets called.");
                 tag2 = new ID3v24Tag();
+                tag2.setTitle(title);
                 mp3file.setId3v2Tag(tag2);
             }
             try {
                 File file = new File(filepath);
+                String newfilepath = filepath.substring(0, filepath.length() - 4) +  " - copy.mp3";
+                mp3file.save(newfilepath);
                 if (file.delete()) {
                     System.out.println("test123");
-                    String newfilepath = filepath.substring(0, filepath.length() - 4) +  " - copy.mp3";
-                    mp3file.save(newfilepath);
+                    System.out.println(newfilepath);
                     File oldFile = new File(newfilepath);
-                    File newFileLocation = new File(filepath);
-                    if (oldFile.renameTo(newFileLocation)) {
+                    if (oldFile.createNewFile()) {
+                        System.out.println("Created new file");
+                    }
+                    // File newFileLocation = new File(filepath);
+                    if (oldFile.renameTo(file)) {
                         System.out.println("File renamed successfully");
                     }
                 }
@@ -85,7 +93,7 @@ public class Mp3editorPlugin implements MethodCallHandler {
             }
       } if (call.method.equals("getArtist")) {
 
-      } if (call.method.equals("getArtist")) {
+      } if (call.method.equals("setArtist")) {
 
       }
 
