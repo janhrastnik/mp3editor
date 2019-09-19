@@ -33,6 +33,30 @@ public class Mp3editorPlugin implements MethodCallHandler {
     channel.setMethodCallHandler(new Mp3editorPlugin());
   }
 
+    public void saveFile(String filepath, Mp3File mp3file) {
+        try {
+            File file = new File(filepath);
+            String newfilepath = filepath.substring(0, filepath.length() - 4) +  " - copy.mp3";
+            mp3file.save(newfilepath);
+            if (file.delete()) {
+                System.out.println("test123");
+                System.out.println(newfilepath);
+                File oldFile = new File(newfilepath);
+                if (oldFile.createNewFile()) {
+                    System.out.println("Created new file");
+                }
+                // File newFileLocation = new File(filepath);
+                if (oldFile.renameTo(file)) {
+                    System.out.println("File renamed successfully");
+                }
+            }
+        } catch (NotSupportedException NotSupported) {
+            System.out.println(NotSupported.toString());
+        } catch (IOException IoException) {
+            System.out.println(IoException.toString());
+        }
+    }
+
   @Override
   public void onMethodCall(MethodCall call, Result result) {
     Map<String, Object> arguments = call.arguments();
@@ -60,41 +84,40 @@ public class Mp3editorPlugin implements MethodCallHandler {
           title = tag2.getTitle();
         }
         result.success(title);
-      } if (call.method.equals("setTitle")) {
-            String title = (String) arguments.get("title");
+      } if (call.method.equals("getArtist")) {
+            String artist;
             if (tag1 != null) {
-                System.out.println("v1 tag gets called.");
-                tag1.setTitle(title);
-                mp3file.setId3v1Tag(tag1);
+                artist = tag1.getArtist();
             } else {
                 System.out.println("v2 tag gets called.");
-                tag2 = new ID3v24Tag();
-                tag2.setTitle(title);
-                mp3file.setId3v2Tag(tag2);
+                artist = tag2.getArtist();
             }
-            try {
-                File file = new File(filepath);
-                String newfilepath = filepath.substring(0, filepath.length() - 4) +  " - copy.mp3";
-                mp3file.save(newfilepath);
-                if (file.delete()) {
-                    System.out.println("test123");
-                    System.out.println(newfilepath);
-                    File oldFile = new File(newfilepath);
-                    if (oldFile.createNewFile()) {
-                        System.out.println("Created new file");
-                    }
-                    // File newFileLocation = new File(filepath);
-                    if (oldFile.renameTo(file)) {
-                        System.out.println("File renamed successfully");
-                    }
-                }
-            } catch (NotSupportedException NotSupported) {
-                System.out.println(NotSupported.toString());
+            result.success(artist);
+      } if (call.method.equals("setID3v1Tags")) {
+            ID3v1 id3v1Tag;
+            String trackNumber = (String) arguments.get("trackNumber");
+            String artist = (String) arguments.get("artist");
+            String title = (String) arguments.get("title");
+            String album = (String) arguments.get("album");
+            String year = (String) arguments.get("year");
+            Integer genre = (Integer) arguments.get("genre");
+            String comment = (String) arguments.get("comment");
+
+            if (mp3file.hasId3v1Tag()) {
+                id3v1Tag =  mp3file.getId3v1Tag();
+            } else {
+                // mp3 does not have an ID3v1 tag, let's create one..
+                id3v1Tag = new ID3v1Tag();
+                mp3file.setId3v1Tag(id3v1Tag);
             }
-      } if (call.method.equals("getArtist")) {
-
-      } if (call.method.equals("setArtist")) {
-
+            id3v1Tag.setTrack(trackNumber);
+            id3v1Tag.setArtist(artist);
+            id3v1Tag.setTitle(title);
+            id3v1Tag.setAlbum(album);
+            id3v1Tag.setYear(year);
+            id3v1Tag.setGenre(genre);
+            id3v1Tag.setComment(comment);
+            saveFile(filepath, mp3file);
       }
 
     } catch (IOException Io) {

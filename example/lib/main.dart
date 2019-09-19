@@ -13,9 +13,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String trackTitle = "";
+  String title = "";
+  String artist = "";
+  String album = "";
+  String year = "";
+  String genre = "";
+  String comment = "";
+  String trackNumber = "";
   String filepath;
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controllerTitle = TextEditingController();
+  final TextEditingController _controllerArtist = TextEditingController();
 
   @override
   void initState() {
@@ -30,8 +37,19 @@ class _MyAppState extends State<MyApp> {
   }
 
   void onPressed() {
-    trackTitle = _controller.text;
-    Mp3editor.setTitle(filepath, trackTitle);
+    title = _controllerTitle.text;
+    artist = _controllerArtist.text;
+    // TODO: setID3v1Tag
+    Mp3editor.setID3v1Tag(
+        filepath: filepath,
+        trackNumber: trackNumber,
+        artist: artist,
+        title: title,
+        album: album,
+        year: year,
+        genre: genre,
+        comment: comment
+    );
   }
 
   Future<void> getFilepath() async {
@@ -45,12 +63,22 @@ class _MyAppState extends State<MyApp> {
 
   Future<String> getTitle() async {
     try {
-      trackTitle = await Mp3editor.getTitle(filepath);
-      print("tracktitle is " + trackTitle);
+      title = await Mp3editor.getTitle(filepath);
+      print("track title is " + title);
     } catch (e) {
       print(e);
     }
-    return trackTitle;
+    return title;
+  }
+
+  Future<String> getArtist() async {
+    try {
+      artist = await Mp3editor.getArtist(filepath);
+      print("artist is " + artist);
+    } catch (e) {
+      print(e);
+    }
+    return artist;
   }
 
   @override
@@ -64,10 +92,9 @@ class _MyAppState extends State<MyApp> {
           child: Center(
             child: Column(
               children: <Widget>[
-                Image.asset("mp3samples/aaa.png"),
                 Row(
                   children: <Widget>[
-                    Text(trackTitle),
+                    Text(title),
                     MaterialButton(
                         onPressed: () {
                           setState(() {
@@ -80,23 +107,36 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Row(
                   children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText: trackTitle
-                          ),
-                          controller: _controller,
-                        ),
-                      ),
-                    ),
+                    Text(artist),
                     MaterialButton(
-                      onPressed: onPressed,
-                      child: Text("Set Title"),
+                        onPressed: () {
+                          setState(() {
+                            getArtist();
+                          });
+                        },
+                        child: Text("Get Artist")
                     )
                   ],
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: title
+                    ),
+                    controller: _controllerTitle,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: artist
+                    ),
+                    controller: _controllerArtist,
+                  ),
+                ),
+
               ],
             ),
           ),

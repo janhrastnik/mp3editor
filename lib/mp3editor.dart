@@ -13,10 +13,24 @@ class Mp3editor {
     return title;
   }
 
-  static Future<void> setTitle(filepath, title) async {
-    await _channel.invokeMethod('setTitle', <String, dynamic>{
+  static Future<String> getArtist(filepath) async {
+    final String title = await _channel.invokeMethod('getArtist', <String, dynamic>{
+      'filepath': filepath
+    });
+    return title;
+  }
+
+  static Future<void> setID3v1Tag({filepath, trackNumber, artist,
+    title, album, year, genre, comment}) async {
+    await _channel.invokeMethod('setArtist', <String, dynamic>{
       'filepath': filepath,
-      'title': title
+      'trackNumber': trackNumber,
+      'artist': artist,
+      'title': title,
+      'album': album,
+      'year': year,
+      'genre': genre,
+      'comment': comment
     });
   }
 }
