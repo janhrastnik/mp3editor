@@ -21,8 +21,6 @@ class _MyAppState extends State<MyApp> {
   String comment = "";
   String trackNumber = "";
   String filepath;
-  final TextEditingController _controllerTitle = TextEditingController();
-  final TextEditingController _controllerArtist = TextEditingController();
 
   @override
   void initState() {
@@ -36,10 +34,11 @@ class _MyAppState extends State<MyApp> {
         buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 
-  void onPressed() {
-    title = _controllerTitle.text;
-    artist = _controllerArtist.text;
+  void setTags() {
     // TODO: setID3v1Tag
+    print("setTags gets run");
+    print(artist);
+    print(title);
     Mp3editor.setID3v1Tag(
         filepath: filepath,
         trackNumber: trackNumber,
@@ -83,6 +82,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -118,25 +118,50 @@ class _MyAppState extends State<MyApp> {
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: title
-                    ),
-                    controller: _controllerTitle,
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: title
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Please enter a title.";
+                            }
+                          },
+                          onSaved: (val) => title = val,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: artist
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Please enter a title.";
+                            }
+                          },
+                          onSaved: (val) => artist = val,
+                        ),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          final form = _formKey.currentState;
+                          if (form.validate()) {
+                            form.save();
+                            setTags();
+                          }
+                        },
+                      )
+                    ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: artist
-                    ),
-                    controller: _controllerArtist,
-                  ),
-                ),
-
+                )
               ],
             ),
           ),
