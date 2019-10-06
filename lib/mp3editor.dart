@@ -22,7 +22,7 @@ class Mp3editor {
 
   static Future<void> setID3v1Tag({filepath, trackNumber, artist,
     title, album, year, genre, comment}) async {
-    await _channel.invokeMethod('setArtist', <String, dynamic>{
+    await _channel.invokeMethod('setID3v1Tag', <String, dynamic>{
       'filepath': filepath,
       'trackNumber': trackNumber,
       'artist': artist,

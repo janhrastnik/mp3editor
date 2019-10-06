@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
   String artist = "";
   String album = "";
   String year = "";
-  String genre = "";
+  int genre = 0;
   String comment = "";
   String trackNumber = "";
   String filepath;
@@ -131,6 +131,8 @@ class _MyAppState extends State<MyApp> {
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Please enter a title.";
+                            } else {
+                              return null;
                             }
                           },
                           onSaved: (val) => title = val,
@@ -144,7 +146,9 @@ class _MyAppState extends State<MyApp> {
                           ),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return "Please enter a title.";
+                              return "Please enter an artist name.";
+                            } else {
+                              return null;
                             }
                           },
                           onSaved: (val) => artist = val,
@@ -158,6 +162,7 @@ class _MyAppState extends State<MyApp> {
                             setTags();
                           }
                         },
+                        child: Text("Submit"),
                       )
                     ],
                   ),

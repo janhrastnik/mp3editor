@@ -93,7 +93,7 @@ public class Mp3editorPlugin implements MethodCallHandler {
                 artist = tag2.getArtist();
             }
             result.success(artist);
-      } if (call.method.equals("setID3v1Tags")) {
+      } if (call.method.equals("setID3v1Tag")) {
             ID3v1 id3v1Tag;
             String trackNumber = (String) arguments.get("trackNumber");
             String artist = (String) arguments.get("artist");
@@ -102,12 +102,14 @@ public class Mp3editorPlugin implements MethodCallHandler {
             String year = (String) arguments.get("year");
             Integer genre = (Integer) arguments.get("genre");
             String comment = (String) arguments.get("comment");
-
+            System.out.println("SetID3v1Tags method gets called");
             if (mp3file.hasId3v1Tag()) {
                 id3v1Tag =  mp3file.getId3v1Tag();
             } else {
                 // mp3 does not have an ID3v1 tag, let's create one..
+                System.out.println("else gets run");
                 id3v1Tag = new ID3v1Tag();
+                mp3file.removeId3v2Tag();
                 mp3file.setId3v1Tag(id3v1Tag);
             }
             id3v1Tag.setTrack(trackNumber);
