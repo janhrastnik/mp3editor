@@ -20,6 +20,41 @@ class Mp3editor {
     return title;
   }
 
+  static Future<String> getTrackNumber(filepath) async {
+    final String trackNumber = await _channel.invokeMethod('getTrackNumber', <String, dynamic>{
+      'filepath': filepath
+    });
+    return trackNumber;
+  }
+
+  static Future<String> getAlbum(filepath) async {
+    final String album = await _channel.invokeMethod('getAlbum', <String, dynamic>{
+      'filepath': filepath
+    });
+    return album;
+  }
+
+  static Future<String> getYear(filepath) async {
+    final String year = await _channel.invokeMethod('getYear', <String, dynamic>{
+      'filepath': filepath
+    });
+    return year;
+  }
+
+  static Future<int> getGenre(filepath) async {
+    final int genre = await _channel.invokeMethod('getGenre', <String, dynamic>{
+      'filepath': filepath
+    });
+    return genre;
+  }
+
+  static Future<String> getComment(filepath) async {
+    final String comment = await _channel.invokeMethod('getComment', <String, dynamic>{
+      'filepath': filepath
+    });
+    return comment;
+  }
+
   static Future<void> setID3v1Tag({filepath, trackNumber, artist,
     title, album, year, genre, comment}) async {
     await _channel.invokeMethod('setID3v1Tag', <String, dynamic>{

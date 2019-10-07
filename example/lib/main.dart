@@ -42,8 +42,8 @@ class _MyAppState extends State<MyApp> {
     Mp3editor.setID3v1Tag(
         filepath: filepath,
         trackNumber: trackNumber,
-        artist: artist,
         title: title,
+        artist: artist,
         album: album,
         year: year,
         genre: genre,
@@ -60,24 +60,60 @@ class _MyAppState extends State<MyApp> {
     filepath = dir + "/track.mp3";
   }
 
-  Future<String> getTitle() async {
+  void getTitle() async {
     try {
       title = await Mp3editor.getTitle(filepath);
-      print("track title is " + title);
     } catch (e) {
       print(e);
     }
-    return title;
   }
 
-  Future<String> getArtist() async {
+  void getArtist() async {
     try {
       artist = await Mp3editor.getArtist(filepath);
-      print("artist is " + artist);
     } catch (e) {
       print(e);
     }
-    return artist;
+  }
+
+  void getTrackNumber() async {
+    try {
+      trackNumber = await Mp3editor.getTrackNumber(filepath);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getAlbum() async {
+    try {
+      album = await Mp3editor.getAlbum(filepath);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getYear() async {
+    try {
+      year = await Mp3editor.getYear(filepath);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getGenre() async {
+    try {
+      genre = await Mp3editor.getGenre(filepath);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getComment() async {
+    try {
+      comment = await Mp3editor.getComment(filepath);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -94,7 +130,7 @@ class _MyAppState extends State<MyApp> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text(title),
+                    Text(title != null ? title : "empty"),
                     MaterialButton(
                         onPressed: () {
                           setState(() {
@@ -107,7 +143,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text(artist),
+                    Text(artist != null ? artist : "empty"),
                     MaterialButton(
                         onPressed: () {
                           setState(() {
@@ -115,6 +151,71 @@ class _MyAppState extends State<MyApp> {
                           });
                         },
                         child: Text("Get Artist")
+                    )
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(trackNumber != null ? trackNumber : "empty"),
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            getTrackNumber();
+                          });
+                        },
+                        child: Text("Get Track Number")
+                    )
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(album != null ? album : "empty"),
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            getAlbum();
+                          });
+                        },
+                        child: Text("Get Album")
+                    )
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(year != null ? year : "empty"),
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            getYear();
+                          });
+                        },
+                        child: Text("Get Year")
+                    )
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(genre.toString() != null ? genre.toString() : "empty"),
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            getGenre();
+                          });
+                        },
+                        child: Text("Get Genre Number")
+                    )
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(comment != null ? comment : "empty"),
+                    MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            getComment();
+                          });
+                        },
+                        child: Text("Get Comment")
                     )
                   ],
                 ),
@@ -126,15 +227,9 @@ class _MyAppState extends State<MyApp> {
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
                           decoration: InputDecoration(
-                              hintText: title
+                              hintText: title != null ? title : "empty",
+                              labelText: "Title"
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Please enter a title.";
-                            } else {
-                              return null;
-                            }
-                          },
                           onSaved: (val) => title = val,
                         ),
                       ),
@@ -142,16 +237,67 @@ class _MyAppState extends State<MyApp> {
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
                           decoration: InputDecoration(
-                              hintText: artist
+                              hintText: artist != null ? artist : "empty",
+                              labelText: "Artist"
+                          ),
+                          onSaved: (val) => artist = val,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: trackNumber != null ? trackNumber : "empty",
+                              labelText: "Track Number"
+                          ),
+                          onSaved: (val) => trackNumber = val,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: album != null ? album : "empty",
+                              labelText: "Album"
+                          ),
+                          onSaved: (val) => album = val,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: year != null ? year : "empty",
+                              labelText: "Year"
+                          ),
+                          onSaved: (val) => year = val,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: genre.toString() != null ? genre.toString() : "empty",
+                              labelText: "Genre number , check online for a list of ID3v1 genres"
                           ),
                           validator: (value) {
-                            if (value.isEmpty) {
-                              return "Please enter an artist name.";
+                            if (int.parse(value) == null) {
+                              return "Please enter a number.";
                             } else {
                               return null;
                             }
                           },
-                          onSaved: (val) => artist = val,
+                          onSaved: (val) => genre = int.parse(val),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: comment != null ? comment : "empty",
+                              labelText: "Comment"
+                          ),
+                          onSaved: (val) => comment = val,
                         ),
                       ),
                       RaisedButton(

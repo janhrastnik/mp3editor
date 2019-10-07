@@ -39,8 +39,6 @@ public class Mp3editorPlugin implements MethodCallHandler {
             String newfilepath = filepath.substring(0, filepath.length() - 4) +  " - copy.mp3";
             mp3file.save(newfilepath);
             if (file.delete()) {
-                System.out.println("test123");
-                System.out.println(newfilepath);
                 File oldFile = new File(newfilepath);
                 if (oldFile.createNewFile()) {
                     System.out.println("Created new file");
@@ -68,10 +66,8 @@ public class Mp3editorPlugin implements MethodCallHandler {
       Mp3File mp3file = new Mp3File(filepath);
 
       if (mp3file.hasId3v1Tag()) {
-          System.out.println("Mp3file has v1 tag.");
         tag1 = mp3file.getId3v1Tag();
       } else {
-          System.out.println("Mp3file has v2 tag.");
         tag2 = mp3file.getId3v2Tag();
       }
 
@@ -80,7 +76,6 @@ public class Mp3editorPlugin implements MethodCallHandler {
         if (tag1 != null) {
           title = tag1.getTitle();
         } else {
-            System.out.println("v2 tag gets called.");
           title = tag2.getTitle();
         }
         result.success(title);
@@ -89,10 +84,49 @@ public class Mp3editorPlugin implements MethodCallHandler {
             if (tag1 != null) {
                 artist = tag1.getArtist();
             } else {
-                System.out.println("v2 tag gets called.");
                 artist = tag2.getArtist();
             }
             result.success(artist);
+      } if (call.method.equals("getTrackNumber")) {
+            String trackNumber;
+            if (tag1 != null) {
+                trackNumber = tag1.getTrack();
+            } else {
+                trackNumber = tag2.getTrack();
+            }
+            result.success(trackNumber);
+      } if (call.method.equals("getAlbum")) {
+            String album;
+            if (tag1 != null) {
+                album = tag1.getAlbum();
+            } else {
+                album = tag2.getAlbum();
+            }
+            result.success(album);
+      } if (call.method.equals("getYear")) {
+            String year;
+            if (tag1 != null) {
+                year = tag1.getYear();
+            } else {
+                year = tag2.getYear();
+            }
+            result.success(year);
+      } if (call.method.equals("getGenre")) {
+            Integer genre;
+            if (tag1 != null) {
+                genre = tag1.getGenre();
+            } else {
+                genre = tag2.getGenre();
+            }
+            result.success(genre);
+      } if (call.method.equals("getComment")) {
+            String comment;
+            if (tag1 != null) {
+                comment = tag1.getComment();
+            } else {
+                comment = tag2.getComment();
+            }
+            result.success(comment);
       } if (call.method.equals("setID3v1Tag")) {
             ID3v1 id3v1Tag;
             String trackNumber = (String) arguments.get("trackNumber");
@@ -131,40 +165,3 @@ public class Mp3editorPlugin implements MethodCallHandler {
     }
   }
 }
-
-/*
-try {
-      Mp3File mp3file = new Mp3File(filepath);
-
-      if (mp3file.hasId3v1Tag()) {
-        tag1 = mp3file.getId3v1Tag();
-      } else {
-        tag2 = mp3file.getId3v2Tag();
-      }
-
-      if (call.method.equals("getTitle")) {
-        String title;
-        if (tag1 != null) {
-          title = tag1.getTitle();
-        } else {
-          title = tag2.getTitle();
-        }
-        result.success(title);
-      } if (call.method.equals("setTitle")) {
-
-      } if (call.method.equals("getArtist")) {
-
-      } if (call.method.equals("getArtist")) {
-
-      } else {
-        result.notImplemented();
-      }
-
-    } catch (IOException Io) {
-      result.error(Io.toString(), Io.getMessage(), Io);
-    } catch (UnsupportedTagException UnsupportedTag) {
-      result.error(UnsupportedTag.toString(), UnsupportedTag.getMessage(), UnsupportedTag);
-    } catch (InvalidDataException InvalidData) {
-      result.error(InvalidData.toString(), InvalidData.getMessage(), InvalidData);
-    }
- */
