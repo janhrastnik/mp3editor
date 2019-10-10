@@ -177,7 +177,7 @@ public class Mp3editorPlugin implements MethodCallHandler {
             } else {
               id3v2Tag = new ID3v24Tag();
               mp3file.removeId3v1Tag();
-              mp3file.setID3v2Tag(id3v2Tag);
+              mp3file.setId3v2Tag(id3v2Tag);
             }
             id3v2Tag.setTrack(trackNumber);
             id3v2Tag.setArtist(artist);
