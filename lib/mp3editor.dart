@@ -68,4 +68,27 @@ class Mp3editor {
       'comment': comment
     });
   }
+
+  static Future<void> setID3v2Tag({filepath, trackNumber, artist,
+    title, album, year, genre, comment, lyrics, composer, publisher,
+    originalArtist, albumArtist, copyright, url, encoder}) async {
+    await _channel.invokeMethod('setID3v2Tag', <String, dynamic>{
+      'filepath': filepath,
+      'trackNumber': trackNumber,
+      'artist': artist,
+      'title': title,
+      'album': album,
+      'year': year,
+      'genre': genre,
+      'comment': comment
+      'lyrics': lyrics,
+      'composer': composer,
+      'publisher': publisher,
+      'originalArtist': originalArtist,
+      'albumArtist': albumArtist,
+      'copyright': copyright,
+      'url': url,
+      'encoder', encoder
+    });
+  }
 }

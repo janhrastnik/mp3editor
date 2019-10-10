@@ -9,7 +9,10 @@ If you have the mp3 file in your flutter assets, you can save it to the device
 like so:
 
 ```dart
-writeToFile(Future<void> writeToFile(ByteData data, String path) {
+import 'package:path_provider/path_provider.dart';
+String filepath;
+
+writeToFile(ByteData data, String path) {
   final buffer = data.buffer;
   return new File(path).writeAsBytes(
     buffer.asUint8List(data.offsetInBytes, data.lengthInBytes)

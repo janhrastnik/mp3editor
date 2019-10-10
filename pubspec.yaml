@@ -1,8 +1,9 @@
 name: mp3editor
-description: Plugin for editing mp3 tags
-version: 0.0.1
+description: A Flutter plugin for reading and writing mp3 file tags.
+version: 0.0.2
 author: Jan Hrastnik <jan.hrastnik2@gmail.com>
 homepage: https://github.com/janhrastnik
+repository: https://github.com/janhrastnik/mp3editor
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

@@ -136,12 +136,11 @@ public class Mp3editorPlugin implements MethodCallHandler {
             String year = (String) arguments.get("year");
             Integer genre = (Integer) arguments.get("genre");
             String comment = (String) arguments.get("comment");
-            System.out.println("SetID3v1Tags method gets called");
+            System.out.println("SetID3v1Tag method gets called");
             if (mp3file.hasId3v1Tag()) {
-                id3v1Tag =  mp3file.getId3v1Tag();
+                id3v1Tag = mp3file.getId3v1Tag();
             } else {
                 // mp3 does not have an ID3v1 tag, let's create one..
-                System.out.println("else gets run");
                 id3v1Tag = new ID3v1Tag();
                 mp3file.removeId3v2Tag();
                 mp3file.setId3v1Tag(id3v1Tag);
@@ -153,6 +152,48 @@ public class Mp3editorPlugin implements MethodCallHandler {
             id3v1Tag.setYear(year);
             id3v1Tag.setGenre(genre);
             id3v1Tag.setComment(comment);
+            saveFile(filepath, mp3file);
+      } if (call.method.equals("setID3v2Tag")) {
+            ID3v2 id3v2Tag;
+            String trackNumber = (String) arguments.get("trackNumber");
+            String artist = (String) arguments.get("artist");
+            String title = (String) arguments.get("title");
+            String album = (String) arguments.get("album");
+            String year = (String) arguments.get("year");
+            Integer genre = (Integer) arguments.get("genre");
+            String comment = (String) arguments.get("comment");
+            String lyrics = (String) arguments.get("lyrics");
+            String composer = (String) arguments.get("composer");
+            String publisher = (String) arguments.get("publisher");
+            String originalArtist = (String) arguments.get("originalArtist");
+            String albumArtist = (String) arguments.get("albumArtist");
+            String copyright = (String) arguments.get("copyright");
+            String url = (String) arguments.get("url");
+            String encoder = (String) arguments.get("encoder");
+            System.out.println("SetID3v2Tag method gets called");
+
+            if (mp3file.hasId3v2Tag()) {
+              id3v2Tag = mp3file.getId3v2Tag();
+            } else {
+              id3v2Tag = new ID3v24Tag();
+              mp3file.removeId3v1Tag();
+              mp3file.setID3v2Tag(id3v2Tag);
+            }
+            id3v2Tag.setTrack(trackNumber);
+            id3v2Tag.setArtist(artist);
+            id3v2Tag.setTitle(title);
+            id3v2Tag.setAlbum(album);
+            id3v2Tag.setYear(year);
+            id3v2Tag.setGenre(genre);
+            id3v2Tag.setComment(comment);
+            id3v2Tag.setLyrics(lyrics);
+            id3v2Tag.setComposer(composer);
+            id3v2Tag.setPublisher(publisher);
+            id3v2Tag.setOriginalArtist(originalArtist);
+            id3v2Tag.setAlbumArtist(albumArtist);
+            id3v2Tag.setCopyright(copyright);
+            id3v2Tag.setUrl(url);
+            id3v2Tag.setEncoder(encoder);
             saveFile(filepath, mp3file);
       }
 

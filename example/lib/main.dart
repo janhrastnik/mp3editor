@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
         buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 
-  void setTags() {
+  void setV1Tags() {
     // TODO: setID3v1Tag
     print("setTags gets run");
     print(artist);
@@ -305,7 +305,7 @@ class _MyAppState extends State<MyApp> {
                           final form = _formKey.currentState;
                           if (form.validate()) {
                             form.save();
-                            setTags();
+                            setV1Tags();
                           }
                         },
                         child: Text("Submit"),
