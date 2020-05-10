@@ -60,14 +60,3 @@ Be careful with the 'genre' parameter, you need to specify an ID3v1 genre
 number, see [this](https://en.wikipedia.org/wiki/List_of_ID3v1_Genres) for more.
 
 Checkout the [example](https://github.com/janhrastnik/mp3editor/blob/master/example/lib/main.dart) for further details.
-
-## Getting Started
-
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
